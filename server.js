@@ -12,7 +12,8 @@ db.sync().then(() => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Payment Server is running on port ${PORT}`);
+  console.log(`Payment Server is running on port ${PORT}`);
 });
 
 module.exports = app; // If needed, export `app` for external use
+//helo
