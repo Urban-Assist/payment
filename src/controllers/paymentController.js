@@ -106,7 +106,7 @@ const PaymentController = {
                 'Content-Type': 'application/json'
             });
         
-            const bookingResponse = await axios.post(process.env.MANAGEMENT_URI+"/booking/success", bookingData,{
+            const bookingResponse = await axios.post(process.env.MANAGEMENT_URI+"/api/booking/success", bookingData,{
                 headers: {
                     "Authorization": req.headers.authorization,
                     "Content-Type": "application/json"
