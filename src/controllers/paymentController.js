@@ -92,8 +92,8 @@ const PaymentController = {
                   "endTime": req.body.user.slot.endTime,
                   "providerEmail": req.body.user.provider.email,
                   "service": req.body.user.service,
-                  "originalStartTime": "2025-03-20T13:00:00Z",
-                  "originalEndTime": "2025-03-20T14:00:00Z"
+                  "originalStartTime": req.body.user.slot.startTime,
+                  "originalEndTime": req.body.user.slot.endTime,
                 }
             };
             
