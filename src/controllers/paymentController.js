@@ -69,6 +69,12 @@ const PaymentController = {
                 paymentMethod: paymentIntent.payment_method, // Use the created payment method ID
             });
 
+            console.log('======= PAYMENT SUCCESSFULLY SAVED TO DATABASE =======');
+            console.log(`Payment ID: ${paymentIntent.id}`);
+            console.log(`Payment Status: ${paymentIntent.status}`);
+            console.log(`Amount: $${amount / 100}`);
+
+            console.log('\n======= PREPARING BOOKING DATA =======');
             //now send the request to the booking.
             const bookingData = {
                 "userEmail": req.consumer?.sub,
@@ -90,14 +96,28 @@ const PaymentController = {
                   "originalEndTime": "2025-03-20T14:00:00Z"
                 }
             };
+            
+            console.log('Booking data prepared:');
+            console.log(JSON.stringify(bookingData, null, 2));
+            
+            console.log(`\n======= SENDING BOOKING REQUEST TO: ${process.env.MANAGEMENT_URI}/api/booking/success =======`);
+            console.log('Request headers:', {
+                Authorization: req.headers.authorization ? '***TOKEN EXISTS***' : '***MISSING***',
+                'Content-Type': 'application/json'
+            });
         
-            const bookingResponse = await axios.post(process.env.MANAGEMENT_URI+"/api/booking/success", bookingData,{
+            const bookingResponse = await axios.post(process.env.MANAGEMENT_URI+"/booking/success", bookingData,{
                 headers: {
                     "Authorization": req.headers.authorization,
                     "Content-Type": "application/json"
                 }
             });
 
+            console.log('\n======= BOOKING RESPONSE RECEIVED =======');
+            console.log('Status:', bookingResponse.status);
+            console.log('Response data:', JSON.stringify(bookingResponse.data, null, 2));
+
+            console.log('\n======= SENDING SUCCESS RESPONSE TO CLIENT =======');
             return res.status(200).json({
                 message: "Payment successful and slot booked",
                 transaction: paymentIntent.id,
