@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: payment-service
-        image: handyshare/payment:latest
+        image: handyshare/payment-service:latest
         imagePullPolicy: Always  # This ensures it pulls the latest image
         ports:
         - containerPort: 8084
