@@ -86,14 +86,14 @@ const PaymentController = {
                 "pricePaid": req.body.user.provider.price,
                 "transactionId": paymentIntent.id,
                 "slotData": {
-                  "_id": "28",
+                  "_id": req.body.user.slot.id,
                   "date": req.body.user.slot.date,
                   "startTime": req.body.user.slot.startTime,
                   "endTime": req.body.user.slot.endTime,
                   "providerEmail": req.body.user.provider.email,
                   "service": req.body.user.service,
-                  "originalStartTime": req.body.user.slot.startTime,
-                  "originalEndTime": req.body.user.slot.endTime,
+                  "originalStartTime": req.body.user.slot.originalStartTime,
+                  "originalEndTime": req.body.user.slot.originalEndTime,
                 }
             };
             
