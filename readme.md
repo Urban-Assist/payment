@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/license-ISC-red.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-<img src="https://i.imgur.com/9Jz1SJs.gif" alt="Payment Service Logo" width="200"/>
+<img src="https://as2.ftcdn.net/v2/jpg/12/67/19/85/1000_F_1267198544_7rYprM9xYUCmN3tGxxaaqqntLcZlyLLb.jpg" alt="Payment Service Logo" width="200"/>
 
 *Effortlessly process payments and manage transactions for the Urban Assist platform.*
 
@@ -26,19 +26,54 @@
 
 The Payment Microservice is a robust and scalable solution for handling payment processing, customer management, and transaction tracking. Built with Node.js and Express, it integrates seamlessly with Stripe for secure payment handling and supports Kubernetes for high availability.
 
-<details>
-<summary>✨ Key Features</summary>
+<div align="center">
 
-- **Stripe Integration** - Secure and reliable payment processing.
-- **Customer Management** - Create and manage Stripe customers.
-- **Transaction Tracking** - Store and retrieve payment details.
-- **PDF Receipts** - Generate professional payment receipts.
-- **JWT Authentication** - Secure API endpoints with token-based authentication.
-- **Kubernetes Ready** - Auto-scaling, self-healing, and rolling updates.
-- **Dockerized** - Lightweight and portable containerized deployment.
-- **Developer-Friendly** - Clean, modular codebase with detailed logging.
+<img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjg3eHd5ZWtjN2tzMWcxaWVoYXo1dW5rMHR6amo5YnZqMTRtaXVtaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/077i6AULCXc0FKTj9s/giphy.gif" alt="Secure Payments" width="400"  />
 
-</details>
+</div>
+
+### 🔐 Security & Best Practices
+
+Our payment processing implementation follows industry-standard security practices:
+
+- **PCI DSS Compliance**: Through Stripe integration, we maintain PCI compliance without handling sensitive card data directly
+- **Tokenization**: Card details are tokenized by Stripe before reaching our servers
+- **End-to-End Encryption**: All communications with Stripe use TLS 1.2+
+- **Zero Card Storage**: We never store raw card details on our servers
+- **Automated Fraud Detection**: Leveraging Stripe's Radar system for fraud prevention
+- **Webhook Signatures**: All webhook endpoints verify Stripe signatures
+- **Rate Limiting**: API endpoints are protected against brute force attacks
+- **Regular Security Audits**: Automated and manual security testing
+
+### 💪 Stripe Integration Benefits
+
+<div align="center">
+
+<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnNleW1reWRzcWtiaDRzZG1hYmxvbHg5dWpycm1mdDE0YnFwcW9vNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xTiTndGMuJFfKHas2Q/giphy.gif" alt="Integration Benefits" width="400"/>
+
+</div>
+
+Our Stripe integration provides:
+
+1. **Global Payment Methods**
+   - Support for 135+ currencies
+   - Local payment methods across 40+ countries
+   - Automatic currency conversion
+
+2. **Smart Optimization**
+   - Machine learning for fraud prevention
+   - Adaptive acceptance rates
+   - Smart retry logic for failed payments
+
+3. **Compliance & Reporting**
+   - Automated tax calculation and reporting
+   - GDPR and PCI compliance handling
+   - Detailed financial reports and reconciliation
+
+4. **Developer Experience**
+   - Comprehensive testing environment
+   - Detailed error messages
+   - Extensive API documentation
 
 ---
 
@@ -87,6 +122,13 @@ Before you begin, ensure you have the following installed:
 ---
 
 ## 🏃‍♂️ Running the Microservice
+
+<div align="center">
+
+<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGhleDZiaG9rc28yZWV0Y3g2dWZsZG55MTNqd3o5c3V6NWxkeDV6ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/4H3Ii5eLChYul9p7NL/giphy.gif" alt="Service Deployment" width="400"/>
+
+</div>
+
 
 ### Development Mode
 
@@ -150,25 +192,111 @@ Visit `http://localhost:8085/payments` to ensure the service is running.
 
 ## 📡 API Endpoints
 
+> **Authentication Note**: For authenticated endpoints, include the JWT token in the Authorization header:
+> ```
+> Authorization: Bearer <your-jwt-token>
+> ```
+
+
 | Endpoint                          | Method | Description                                   | Auth Required |
 |-----------------------------------|--------|-----------------------------------------------|---------------|
-| `/payments/card-pay`              | POST   | Process a card payment                       | ✅             |
-| `/payments/create-customer`       | POST   | Create a new Stripe customer                 | ❌             |
-| `/payments/:email`                | GET    | Fetch payments by customer/provider email    | ✅             |
+| `/payments/card-pay`              | POST   | Process a card payment                       | ✅     |
+`/payments/:email`                | GET    | Fetch payments by customer/provider email    | ✅             |
 | `/payments/receipt/:paymentId`    | GET    | Generate a PDF receipt for a payment         | ✅             |
 
-### Example Request
 
-```bash
-curl -X POST http://localhost:8085/payments/card-pay \
-  -H "Authorization: Bearer <JWT_TOKEN>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "amount": 100,
-    "currency": "usd",
-    "paymentMethodId": "pm_card_visa"
-  }'
+<details>
+
+<summary>📕Exaple Request Responses </summary>
+
+
+
+#### Make a card payment for your bookings
+
+```http
+Request
+PORT /payments/card-pay
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+ "userEmail": req.consumer?.sub,
+                "userName": "John Doe",
+                "providerEmail": abc@gmail.com,
+                "providerName":  full name of the provider
+                "providerPhoneNumber": +19999999999,
+                "service": "plumbing",
+                "pricePaid": 120,
+                
+                "slotData": {
+                  "_id": user's id,
+                  "date": date ,
+                  "startTime": user selected start time,
+                  "endTime": user selected end time,
+                  "providerEmail": manoj@smail.com,
+                  "service": "plumbing",
+                  "originalStartTime": start time in UTC format,
+                  "originalEndTime": End time in UTC format,
+                }
+                
+Response:
+{
+
+    message:"Payment successful and slot booked",
+    transaction : cus_23t4X24,
+    payment : pay_823794uj,
+    bookingResponse : Booking data
+}
+    
 ```
+
+```http
+GET /payments/receipt/:paymentId
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+Response:
+
+-- A PDF file with the bill copy and a certified digital urban assist organization's unique stamp.
+```
+
+
+</details>
+ 
+
+---
+
+## 📡 API Security Layers
+
+Our API implements multiple security layers:
+
+1. **Authentication**
+   - JWT-based token authentication
+   - Token expiration and rotation
+   - Role-based access control
+
+2. **Request Validation**
+   - Input sanitization
+   - Schema validation
+   - Request rate limiting
+
+3. **Response Security**
+   - CORS protection
+   - HTTP Security Headers
+   - Response data filtering
+
+---
+
+## 🛡️ Production Security Checklist
+
+Before deploying to production:
+
+✅ Configure Stripe webhook endpoints with proper signatures  
+✅ Set up error monitoring and alerting  
+✅ Enable audit logging for all transactions  
+✅ Configure proper CORS settings  
+✅ Set up rate limiting and request throttling  
+✅ Enable network security groups  
+✅ Configure SSL/TLS certificates  
+✅ Set up database encryption at rest  
 
 ---
 
